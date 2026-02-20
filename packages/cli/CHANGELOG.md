@@ -1,5 +1,19 @@
 # mastra
 
+## 1.3.3-alpha.0
+
+### Patch Changes
+
+- Added Diff view to Compare Dataset Items and Compare Dataset Item Versions pages ([#13267](https://github.com/mastra-ai/mastra/pull/13267))
+
+- Added Header with Combobox to Dataset page ([#13273](https://github.com/mastra-ai/mastra/pull/13273))
+
+- Removed the Experimental Feature mark from sidebar ([#13269](https://github.com/mastra-ai/mastra/pull/13269))
+
+- Updated dependencies [[`0d9efb4`](https://github.com/mastra-ai/mastra/commit/0d9efb47992c34aa90581c18b9f51f774f6252a5), [`5caa13d`](https://github.com/mastra-ai/mastra/commit/5caa13d1b2a496e2565ab124a11de9a51ad3e3b9), [`940163f`](https://github.com/mastra-ai/mastra/commit/940163fc492401d7562301e6f106ccef4fefe06f), [`b260123`](https://github.com/mastra-ai/mastra/commit/b2601234bd093d358c92081a58f9b0befdae52b3), [`47892c8`](https://github.com/mastra-ai/mastra/commit/47892c85708eac348209f99f10f9a5f5267e11c0), [`d84e52d`](https://github.com/mastra-ai/mastra/commit/d84e52d0f6511283ddd21ed5fe7f945449d0f799)]:
+  - @mastra/core@1.6.0-alpha.0
+  - @mastra/deployer@1.6.0-alpha.0
+
 ## 1.3.2
 
 ### Patch Changes

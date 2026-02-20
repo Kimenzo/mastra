@@ -1,5 +1,13 @@
 # create-mastra
 
+## 1.3.3-alpha.0
+
+### Patch Changes
+
+- Added Diff view to Compare Dataset Items and Compare Dataset Item Versions pages ([#13267](https://github.com/mastra-ai/mastra/pull/13267))
+
+- Added Header with Combobox to Dataset page ([#13273](https://github.com/mastra-ai/mastra/pull/13273))
+
 ## 1.3.2
 
 ### Patch Changes

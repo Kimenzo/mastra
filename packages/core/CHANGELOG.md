@@ -1,5 +1,108 @@
 # @mastra/core
 
+## 1.6.0-alpha.0
+
+### Minor Changes
+
+- Added Processor Providers — a new system for configuring and hydrating processors on stored agents. ([#13219](https://github.com/mastra-ai/mastra/pull/13219))
+
+  **What's new:**
+  - `ProcessorProvider` interface for registering processor types with config schemas, available phases, and a factory method
+  - `PhaseFilteredProcessor` wrapper that selectively enables specific processor phases (e.g. only `processInput` from a processor that also supports `processOutputStream`)
+  - `StoredProcessorGraph` — a serializable DSL for processor pipelines that supports sequential, parallel, and conditional execution
+  - Stored agents now use `StorageConditionalField<StoredProcessorGraph>` for `inputProcessors` and `outputProcessors`, enabling request-context-based processor selection
+  - Graph hydration converts stored configs into live `Processor[]` (sequential) or `ProcessorWorkflow` (parallel/conditional) instances at runtime
+
+  **Example — custom processor provider:**
+
+  ```ts
+  import { MastraEditor } from '@mastra/editor';
+
+  // Built-in processors (token-limiter, unicode-normalizer, etc.) are registered automatically.
+  // Only register custom providers for your own processors:
+  const editor = new MastraEditor({
+    processorProviders: {
+      'my-custom-filter': myCustomFilterProvider,
+    },
+  });
+  ```
+
+  **Example — stored agent with a processor graph:**
+
+  ```ts
+  const agentConfig = {
+    inputProcessors: {
+      steps: [
+        {
+          type: 'step',
+          step: { id: 'norm', providerId: 'unicode-normalizer', config: {}, enabledPhases: ['processInput'] },
+        },
+        {
+          type: 'step',
+          step: {
+            id: 'limit',
+            providerId: 'token-limiter',
+            config: { limit: 4000 },
+            enabledPhases: ['processInput', 'processOutputStream'],
+          },
+        },
+      ],
+    },
+  };
+  ```
+
+- Added AST edit tool (`workspace_ast_edit`) for intelligent code transformations using AST analysis. Supports renaming identifiers, adding/removing/merging imports, and pattern-based find-and-replace with metavariable substitution. Automatically available when `@ast-grep/napi` is installed in the project. ([#13233](https://github.com/mastra-ai/mastra/pull/13233))
+
+  **Example:**
+
+  ```ts
+  const workspace = new Workspace({
+    filesystem: new LocalFilesystem({ basePath: '/my/project' }),
+  });
+  const tools = createWorkspaceTools(workspace);
+
+  // Rename all occurrences of an identifier
+  await tools['mastra_workspace_ast_edit'].execute({
+    path: '/src/utils.ts',
+    transform: 'rename',
+    targetName: 'oldName',
+    newName: 'newName',
+  });
+
+  // Add an import (merges into existing imports from the same module)
+  await tools['mastra_workspace_ast_edit'].execute({
+    path: '/src/app.ts',
+    transform: 'add-import',
+    importSpec: { module: 'react', names: ['useState', 'useEffect'] },
+  });
+
+  // Pattern-based replacement with metavariables
+  await tools['mastra_workspace_ast_edit'].execute({
+    path: '/src/app.ts',
+    pattern: 'console.log($ARG)',
+    replacement: 'logger.debug($ARG)',
+  });
+  ```
+
+### Patch Changes
+
+- Removed redundant Vercel AI Gateway `apiKeyEnvVar` override from `PROVIDER_OVERRIDES` since models.dev already provides it. ([#13291](https://github.com/mastra-ai/mastra/pull/13291))
+
+- Improve OM activation chunk selection to land closer to retention target ([#13305](https://github.com/mastra-ai/mastra/pull/13305))
+  - Bias chunk selection "over" the target instead of "under", so post-activation context lands at or below the retention floor rather than above it
+  - Add overshoot safeguard: if bias-over would consume more than 95% of the retention floor, fall back to bias-under
+  - Add 1000-token floor: prevent bias-over from leaving fewer than 1000 raw tokens remaining
+  - Add `forceMaxActivation`: when pending tokens exceed `blockAfter`, bypass safeguards to aggressively reduce context
+  - Halve the async buffer interval when approaching the activation threshold for finer-grained chunks
+  - Allow `bufferActivation` to accept absolute token retention values (>= 1000) in addition to ratios (0-1)
+
+- Fixed Vercel AI Gateway failing when using the model router string format (e.g. `vercel/openai/gpt-oss-120b`). The provider registry was overriding `createGateway`'s base URL with an incorrect value, causing API requests to hit the wrong endpoint. Removed the URL override so the AI SDK uses its own correct default. Closes #13280. ([#13287](https://github.com/mastra-ai/mastra/pull/13287))
+
+- Fixed recursive schema warnings for processor graph entries by unrolling to a fixed depth of 3 levels, matching the existing rule group pattern ([#13292](https://github.com/mastra-ai/mastra/pull/13292))
+
+- Updated dependencies [[`7184d87`](https://github.com/mastra-ai/mastra/commit/7184d87c9237d26862f500ccfd0c9f9eadd38ddf)]:
+  - @mastra/schema-compat@1.1.2-alpha.0
+
 ## 1.5.0
 
 ### Minor Changes

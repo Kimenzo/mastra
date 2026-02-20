@@ -111,5 +111,28 @@
     "@mastra/gcs": "0.1.1",
     "@mastra/s3": "0.2.0"
   },
-  "changesets": []
+  "changesets": [
+    "@mastra_playground-ui-13284-dependencies",
+    "@mastra_playground-ui-13300-dependencies",
+    "@mastra_react-13308-dependencies",
+    "brave-turkeys-begin",
+    "brown-bags-dress",
+    "brown-goats-kneel",
+    "busy-aliens-hug",
+    "chilly-vans-cover",
+    "cute-donuts-look",
+    "cyan-worms-enter",
+    "empty-ends-camp",
+    "fancy-wasps-scream",
+    "fix-om-activation",
+    "free-groups-sip",
+    "good-llamas-travel",
+    "many-crabs-dress",
+    "perky-llamas-play",
+    "proud-windows-behave",
+    "puny-animals-beg",
+    "real-garlics-smell",
+    "soft-moons-call",
+    "strict-sites-retire"
+  ]
 }

@@ -1,5 +1,67 @@
 # @mastra/pg
 
+## 1.5.1-alpha.0
+
+### Patch Changes
+
+- Added Processor Providers — a new system for configuring and hydrating processors on stored agents. ([#13219](https://github.com/mastra-ai/mastra/pull/13219))
+
+  **What's new:**
+  - `ProcessorProvider` interface for registering processor types with config schemas, available phases, and a factory method
+  - `PhaseFilteredProcessor` wrapper that selectively enables specific processor phases (e.g. only `processInput` from a processor that also supports `processOutputStream`)
+  - `StoredProcessorGraph` — a serializable DSL for processor pipelines that supports sequential, parallel, and conditional execution
+  - Stored agents now use `StorageConditionalField<StoredProcessorGraph>` for `inputProcessors` and `outputProcessors`, enabling request-context-based processor selection
+  - Graph hydration converts stored configs into live `Processor[]` (sequential) or `ProcessorWorkflow` (parallel/conditional) instances at runtime
+
+  **Example — custom processor provider:**
+
+  ```ts
+  import { MastraEditor } from '@mastra/editor';
+
+  // Built-in processors (token-limiter, unicode-normalizer, etc.) are registered automatically.
+  // Only register custom providers for your own processors:
+  const editor = new MastraEditor({
+    processorProviders: {
+      'my-custom-filter': myCustomFilterProvider,
+    },
+  });
+  ```
+
+  **Example — stored agent with a processor graph:**
+
+  ```ts
+  const agentConfig = {
+    inputProcessors: {
+      steps: [
+        {
+          type: 'step',
+          step: { id: 'norm', providerId: 'unicode-normalizer', config: {}, enabledPhases: ['processInput'] },
+        },
+        {
+          type: 'step',
+          step: {
+            id: 'limit',
+            providerId: 'token-limiter',
+            config: { limit: 4000 },
+            enabledPhases: ['processInput', 'processOutputStream'],
+          },
+        },
+      ],
+    },
+  };
+  ```
+
+- Improve OM activation chunk selection to land closer to retention target ([#13305](https://github.com/mastra-ai/mastra/pull/13305))
+  - Bias chunk selection "over" the target instead of "under", so post-activation context lands at or below the retention floor rather than above it
+  - Add overshoot safeguard: if bias-over would consume more than 95% of the retention floor, fall back to bias-under
+  - Add 1000-token floor: prevent bias-over from leaving fewer than 1000 raw tokens remaining
+  - Add `forceMaxActivation`: when pending tokens exceed `blockAfter`, bypass safeguards to aggressively reduce context
+  - Halve the async buffer interval when approaching the activation threshold for finer-grained chunks
+  - Allow `bufferActivation` to accept absolute token retention values (>= 1000) in addition to ratios (0-1)
+
+- Updated dependencies [[`0d9efb4`](https://github.com/mastra-ai/mastra/commit/0d9efb47992c34aa90581c18b9f51f774f6252a5), [`5caa13d`](https://github.com/mastra-ai/mastra/commit/5caa13d1b2a496e2565ab124a11de9a51ad3e3b9), [`940163f`](https://github.com/mastra-ai/mastra/commit/940163fc492401d7562301e6f106ccef4fefe06f), [`b260123`](https://github.com/mastra-ai/mastra/commit/b2601234bd093d358c92081a58f9b0befdae52b3), [`47892c8`](https://github.com/mastra-ai/mastra/commit/47892c85708eac348209f99f10f9a5f5267e11c0), [`d84e52d`](https://github.com/mastra-ai/mastra/commit/d84e52d0f6511283ddd21ed5fe7f945449d0f799)]:
+  - @mastra/core@1.6.0-alpha.0
+
 ## 1.5.0
 
 ### Minor Changes

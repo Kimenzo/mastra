@@ -1,5 +1,21 @@
 # @mastra/memory
 
+## 1.4.1-alpha.0
+
+### Patch Changes
+
+- Improve OM activation chunk selection to land closer to retention target ([#13305](https://github.com/mastra-ai/mastra/pull/13305))
+  - Bias chunk selection "over" the target instead of "under", so post-activation context lands at or below the retention floor rather than above it
+  - Add overshoot safeguard: if bias-over would consume more than 95% of the retention floor, fall back to bias-under
+  - Add 1000-token floor: prevent bias-over from leaving fewer than 1000 raw tokens remaining
+  - Add `forceMaxActivation`: when pending tokens exceed `blockAfter`, bypass safeguards to aggressively reduce context
+  - Halve the async buffer interval when approaching the activation threshold for finer-grained chunks
+  - Allow `bufferActivation` to accept absolute token retention values (>= 1000) in addition to ratios (0-1)
+
+- Updated dependencies [[`0d9efb4`](https://github.com/mastra-ai/mastra/commit/0d9efb47992c34aa90581c18b9f51f774f6252a5), [`7184d87`](https://github.com/mastra-ai/mastra/commit/7184d87c9237d26862f500ccfd0c9f9eadd38ddf), [`5caa13d`](https://github.com/mastra-ai/mastra/commit/5caa13d1b2a496e2565ab124a11de9a51ad3e3b9), [`940163f`](https://github.com/mastra-ai/mastra/commit/940163fc492401d7562301e6f106ccef4fefe06f), [`b260123`](https://github.com/mastra-ai/mastra/commit/b2601234bd093d358c92081a58f9b0befdae52b3), [`47892c8`](https://github.com/mastra-ai/mastra/commit/47892c85708eac348209f99f10f9a5f5267e11c0), [`d84e52d`](https://github.com/mastra-ai/mastra/commit/d84e52d0f6511283ddd21ed5fe7f945449d0f799)]:
+  - @mastra/core@1.6.0-alpha.0
+  - @mastra/schema-compat@1.1.2-alpha.0
+
 ## 1.4.0
 
 ### Minor Changes
