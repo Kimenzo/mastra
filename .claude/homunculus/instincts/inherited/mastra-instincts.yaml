@@ -1,0 +1,619 @@
+# Instincts generated from https://github.com/Kimenzo/mastra
+# Generated: 2026-04-02T04:12:19.898Z
+# Version: 2.0
+# NOTE: This file supplements (does not replace) any existing curated instincts.
+# High-confidence manually curated instincts should be preserved alongside these.
+
+---
+id: mastra-commit-conventional
+trigger: "when writing a commit message"
+confidence: 0.85
+domain: git
+source: repo-analysis
+source_repo: https://github.com/Kimenzo/mastra
+---
+
+# Mastra Commit Conventional
+
+## Action
+
+Use conventional commit format with prefixes: fix, chore, feat
+
+## Evidence
+
+- 200 commits analyzed
+- Detected conventional commit pattern
+- Examples: feat: add mastra ECC bundle (.claude/commands/package-version-bump-and-changelog-update.md), fix: preserve raw tool results in save-per-step (#14966)
+
+---
+id: mastra-commit-length
+trigger: "when writing a commit message"
+confidence: 0.6
+domain: git
+source: repo-analysis
+source_repo: https://github.com/Kimenzo/mastra
+---
+
+# Mastra Commit Length
+
+## Action
+
+Write moderate-length commit messages (~63 characters)
+
+## Evidence
+
+- Average commit message length: 63 chars
+- Based on 200 commits
+
+---
+id: mastra-naming-files
+trigger: "when creating a new file"
+confidence: 0.8
+domain: code-style
+source: repo-analysis
+source_repo: https://github.com/Kimenzo/mastra
+---
+
+# Mastra Naming Files
+
+## Action
+
+Use camelCase naming convention
+
+## Evidence
+
+- Analyzed file naming patterns in repository
+- Dominant pattern: camelCase
+
+---
+id: mastra-import-relative
+trigger: "when importing modules"
+confidence: 0.75
+domain: code-style
+source: repo-analysis
+source_repo: https://github.com/Kimenzo/mastra
+---
+
+# Mastra Import Relative
+
+## Action
+
+Use relative imports for project files
+
+## Evidence
+
+- Import analysis shows relative import pattern
+- Example: import { x } from '../lib/x'
+
+---
+id: mastra-export-style
+trigger: "when exporting from a module"
+confidence: 0.7
+domain: code-style
+source: repo-analysis
+source_repo: https://github.com/Kimenzo/mastra
+---
+
+# Mastra Export Style
+
+## Action
+
+Prefer default exports
+
+## Evidence
+
+- Export pattern analysis
+- Dominant style: default
+
+---
+id: mastra-arch-feature-based
+trigger: "when adding a new feature"
+confidence: 0.85
+domain: architecture
+source: repo-analysis
+source_repo: https://github.com/Kimenzo/mastra
+---
+
+# Mastra Arch Feature Based
+
+## Action
+
+Create a new folder in src/features/ with all related code colocated
+
+## Evidence
+
+- Feature-based module organization detected
+- Structure: src/features/[feature-name]/
+
+---
+id: mastra-test-framework
+trigger: "when writing tests"
+confidence: 0.9
+domain: testing
+source: repo-analysis
+source_repo: https://github.com/Kimenzo/mastra
+---
+
+# Mastra Test Framework
+
+## Action
+
+Use vitest as the test framework
+
+## Evidence
+
+- Test framework detected: vitest
+- File pattern: *.test.ts
+
+---
+id: mastra-test-naming
+trigger: "when creating a test file"
+confidence: 0.85
+domain: testing
+source: repo-analysis
+source_repo: https://github.com/Kimenzo/mastra
+---
+
+# Mastra Test Naming
+
+## Action
+
+Name test files using the pattern: *.test.ts
+
+## Evidence
+
+- File pattern: *.test.ts
+- Consistent across test files
+
+---
+id: mastra-test-mocking
+trigger: "when mocking dependencies in tests"
+confidence: 0.75
+domain: testing
+source: repo-analysis
+source_repo: https://github.com/Kimenzo/mastra
+---
+
+# Mastra Test Mocking
+
+## Action
+
+Use vi.mock for mocking
+
+## Evidence
+
+- Mocking pattern detected: vi.mock
+- Consistent across test files
+
+---
+id: mastra-test-types
+trigger: "when planning tests for a feature"
+confidence: 0.7
+domain: testing
+source: repo-analysis
+source_repo: https://github.com/Kimenzo/mastra
+---
+
+# Mastra Test Types
+
+## Action
+
+Write unit, integration, e2e tests to match project standards
+
+## Evidence
+
+- Test types detected: unit, integration, e2e
+- Coverage config: yes
+
+---
+id: mastra-workflow-feature-development
+trigger: "when implementing a new feature"
+confidence: 0.9
+domain: workflow
+source: repo-analysis
+source_repo: https://github.com/Kimenzo/mastra
+---
+
+# Mastra Workflow Feature Development
+
+## Action
+
+Follow the feature-development workflow:
+1. Add feature implementation
+2. Add tests for feature
+3. Update documentation
+
+## Evidence
+
+- Workflow detected from commit patterns
+- Frequency: ~14x per month
+- Files: client-sdks/client-js/src/*, client-sdks/client-js/src/resources/*, examples/responses-api-demo/app/*
+
+---
+id: mastra-workflow-refactoring
+trigger: "when refactoring code"
+confidence: 0.7
+domain: workflow
+source: repo-analysis
+source_repo: https://github.com/Kimenzo/mastra
+---
+
+# Mastra Workflow Refactoring
+
+## Action
+
+Follow the refactoring workflow:
+1. Ensure tests pass before refactor
+2. Refactor code structure
+3. Verify tests still pass
+
+## Evidence
+
+- Workflow detected from commit patterns
+- Frequency: ~4x per month
+- Files: src/**/*
+
+---
+id: mastra-workflow-package-version-bump-and-changelog-update
+trigger: "when doing package version bump and changelog update"
+confidence: 0.7
+domain: workflow
+source: repo-analysis
+source_repo: https://github.com/Kimenzo/mastra
+---
+
+# Mastra Workflow Package Version Bump And Changelog Update
+
+## Action
+
+Follow the package-version-bump-and-changelog-update workflow:
+1. Update .changeset/pre.json to enter/exit prerelease or mark a new version.
+2. Update package.json and CHANGELOG.md for each affected package.
+3. Optionally, add or update .changeset/*.md files with release notes.
+
+## Evidence
+
+- Workflow detected from commit patterns
+- Frequency: ~4x per month
+- Files: .changeset/pre.json, **/CHANGELOG.md, **/package.json
+
+---
+id: mastra-workflow-add-or-update-api-endpoint
+trigger: "when doing add or update api endpoint"
+confidence: 0.6
+domain: workflow
+source: repo-analysis
+source_repo: https://github.com/Kimenzo/mastra
+---
+
+# Mastra Workflow Add Or Update Api Endpoint
+
+## Action
+
+Follow the add-or-update-api-endpoint workflow:
+1. Create or update handler file in packages/server/src/server/handlers/ (e.g., responses.ts, conversations.ts).
+2. Update or create corresponding schema in packages/server/src/server/schemas/.
+3. Add or update tests in packages/server/src/server/handlers/*.test.ts.
+4. Update or create route in packages/server/src/server/server-adapter/routes/.
+5. Update client SDKs if needed (e.g., client-sdks/client-js/src/resources/).
+6. Update documentation in docs/src/content/en/reference/client-js/ or similar.
+
+## Evidence
+
+- Workflow detected from commit patterns
+- Frequency: ~2x per month
+- Files: packages/server/src/server/handlers/*.ts, packages/server/src/server/handlers/*.test.ts, packages/server/src/server/schemas/*.ts
+
+---
+id: mastra-workflow-feature-development-with-tests-and-docs
+trigger: "when doing feature development with tests and docs"
+confidence: 0.65
+domain: workflow
+source: repo-analysis
+source_repo: https://github.com/Kimenzo/mastra
+---
+
+# Mastra Workflow Feature Development With Tests And Docs
+
+## Action
+
+Follow the feature-development-with-tests-and-docs workflow:
+1. Implement feature in relevant source files.
+2. Add or update tests (unit/integration) for the new feature.
+3. Update or create documentation in docs/.
+4. Add a .changeset/*.md entry describing the feature.
+
+## Evidence
+
+- Workflow detected from commit patterns
+- Frequency: ~3x per month
+- Files: packages/**/src/**/*.ts, packages/**/src/**/*.test.ts, docs/src/content/en/**/*.mdx
+
+---
+id: mastra-workflow-bugfix-with-changeset-and-tests
+trigger: "when doing bugfix with changeset and tests"
+confidence: 0.7
+domain: workflow
+source: repo-analysis
+source_repo: https://github.com/Kimenzo/mastra
+---
+
+# Mastra Workflow Bugfix With Changeset And Tests
+
+## Action
+
+Follow the bugfix-with-changeset-and-tests workflow:
+1. Fix the bug in the relevant source file(s).
+2. Add or update a .changeset/*.md file describing the fix.
+3. Update or add tests to verify the bug is fixed.
+
+## Evidence
+
+- Workflow detected from commit patterns
+- Frequency: ~4x per month
+- Files: packages/**/src/**/*.ts, packages/**/src/**/*.test.ts, .changeset/*.md
+
+---
+id: mastra-workflow-regenerate-provider-registry-and-model-docs
+trigger: "when doing regenerate provider registry and model docs"
+confidence: 0.6
+domain: workflow
+source: repo-analysis
+source_repo: https://github.com/Kimenzo/mastra
+---
+
+# Mastra Workflow Regenerate Provider Registry And Model Docs
+
+## Action
+
+Follow the regenerate-provider-registry-and-model-docs workflow:
+1. Regenerate packages/core/src/llm/model/provider-registry.json and provider-types.generated.d.ts.
+2. Update docs/src/content/en/models/index.mdx and related provider .mdx files.
+3. Optionally, add or update .changeset/*.md entries.
+
+## Evidence
+
+- Workflow detected from commit patterns
+- Frequency: ~2x per month
+- Files: packages/core/src/llm/model/provider-registry.json, packages/core/src/llm/model/provider-types.generated.d.ts, docs/src/content/en/models/**/*.mdx
+
+---
+id: mastra-coding-naming-conventions
+trigger: "When creating or renaming files, functions, classes, or constants in TypeScript code."
+confidence: 0.85
+domain: code-style
+source: repo-analysis
+source_repo: Kimenzo/mastra
+---
+
+# Mastra Coding Naming Conventions
+
+## Action
+
+Use camelCase for files and functions, PascalCase for classes, and SCREAMING_SNAKE_CASE for constants.
+
+## Evidence
+
+- Pattern in codeStyle.namingConventions
+- Consistent file/function/class naming in repository file list
+
+---
+id: mastra-coding-import-style
+trigger: "When importing modules in TypeScript files."
+confidence: 0.8
+domain: code-style
+source: repo-analysis
+source_repo: Kimenzo/mastra
+---
+
+# Mastra Coding Import Style
+
+## Action
+
+Use relative import paths.
+
+## Evidence
+
+- Pattern in codeStyle.importStyle
+- Relative imports seen in multiple *.ts files
+
+---
+id: mastra-coding-export-style
+trigger: "When exporting modules or components."
+confidence: 0.8
+domain: code-style
+source: repo-analysis
+source_repo: Kimenzo/mastra
+---
+
+# Mastra Coding Export Style
+
+## Action
+
+Prefer default exports.
+
+## Evidence
+
+- Pattern in codeStyle.exportStyle
+- Default exports seen in repository
+
+---
+id: mastra-testing-vitest-pattern
+trigger: "When writing or updating tests."
+confidence: 0.9
+domain: testing
+source: repo-analysis
+source_repo: Kimenzo/mastra
+---
+
+# Mastra Testing Vitest Pattern
+
+## Action
+
+Use Vitest as the testing framework, with test files named *.test.ts, and use vi.mock for mocking.
+
+## Evidence
+
+- Pattern in testing.framework and testing.filePattern
+- vitest.config.ts and *.test.ts files present in most packages
+
+---
+id: mastra-testing-coverage-config
+trigger: "When configuring or running tests."
+confidence: 0.8
+domain: testing
+source: repo-analysis
+source_repo: Kimenzo/mastra
+---
+
+# Mastra Testing Coverage Config
+
+## Action
+
+Enable and maintain test coverage configuration.
+
+## Evidence
+
+- Pattern in testing.coverageConfig
+- vitest.config.ts files with coverage settings
+
+---
+id: mastra-testing-types
+trigger: "When adding tests for new or existing code."
+confidence: 0.8
+domain: testing
+source: repo-analysis
+source_repo: Kimenzo/mastra
+---
+
+# Mastra Testing Types
+
+## Action
+
+Include unit, integration, and end-to-end (e2e) tests as appropriate.
+
+## Evidence
+
+- Pattern in testing.testTypes
+- Presence of various test types in file structure
+
+---
+id: mastra-git-conventional-commits
+trigger: "When writing a commit message."
+confidence: 0.9
+domain: git
+source: repo-analysis
+source_repo: Kimenzo/mastra
+---
+
+# Mastra Git Conventional Commits
+
+## Action
+
+Use conventional commit format: <type>(<scope>): <description>, where type is fix, feat, chore, test, or refactor.
+
+## Evidence
+
+- Pattern in commits.type and commits.prefixes
+- Examples: 'feat: add mastra ECC bundle', 'fix: preserve raw tool results in save-per-step'
+
+---
+id: mastra-workflow-version-bump
+trigger: "When preparing for a new release, prerelease, or after merging significant changes."
+confidence: 0.98
+domain: workflow
+source: repo-analysis
+source_repo: Kimenzo/mastra
+---
+
+# Mastra Workflow Version Bump
+
+## Action
+
+Update .changeset/pre.json, package.json, and CHANGELOG.md for each affected package; optionally update .changeset/*.md files.
+
+## Evidence
+
+- Workflow: package-version-bump-and-changelog-update
+- Files: .changeset/pre.json, **/CHANGELOG.md, **/package.json, .changeset/*.md
+
+---
+id: mastra-workflow-api-endpoint
+trigger: "When introducing a new API route or modifying an existing endpoint."
+confidence: 0.92
+domain: workflow
+source: repo-analysis
+source_repo: Kimenzo/mastra
+---
+
+# Mastra Workflow Api Endpoint
+
+## Action
+
+Create or update handler, schema, tests, routes, client SDKs, and documentation for the endpoint.
+
+## Evidence
+
+- Workflow: add-or-update-api-endpoint
+- Files: packages/server/src/server/handlers/*.ts, packages/server/src/server/schemas/*.ts, client-sdks/client-js/src/resources/*.ts, docs/src/content/en/reference/client-js/*.mdx
+
+---
+id: mastra-workflow-feature-dev
+trigger: "When adding significant new functionality to the codebase."
+confidence: 0.88
+domain: workflow
+source: repo-analysis
+source_repo: Kimenzo/mastra
+---
+
+# Mastra Workflow Feature Dev
+
+## Action
+
+Implement the feature, add/update tests, update documentation, and add a .changeset/*.md entry.
+
+## Evidence
+
+- Workflow: feature-development-with-tests-and-docs
+- Files: packages/**/src/**/*.ts, packages/**/src/**/*.test.ts, docs/src/content/en/**/*.mdx, .changeset/*.md
+
+---
+id: mastra-workflow-bugfix
+trigger: "When a bug is discovered and needs to be resolved."
+confidence: 0.9
+domain: workflow
+source: repo-analysis
+source_repo: Kimenzo/mastra
+---
+
+# Mastra Workflow Bugfix
+
+## Action
+
+Fix the bug, add/update a .changeset/*.md file, and update/add tests to verify the fix.
+
+## Evidence
+
+- Workflow: bugfix-with-changeset-and-tests
+- Files: packages/**/src/**/*.ts, packages/**/src/**/*.test.ts, .changeset/*.md
+
+---
+id: mastra-workflow-regenerate-providers
+trigger: "When new model providers are added or existing ones are updated."
+confidence: 0.85
+domain: workflow
+source: repo-analysis
+source_repo: Kimenzo/mastra
+---
+
+# Mastra Workflow Regenerate Providers
+
+## Action
+
+Regenerate provider-registry.json and provider-types.generated.d.ts, update related documentation, and optionally add/update .changeset/*.md.
+
+## Evidence
+
+- Workflow: regenerate-provider-registry-and-model-docs
+- Files: packages/core/src/llm/model/provider-registry.json, packages/core/src/llm/model/provider-types.generated.d.ts, docs/src/content/en/models/**/*.mdx, .changeset/*.md
+
